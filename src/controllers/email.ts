@@ -1,7 +1,7 @@
 import { prisma } from "../database/prisma-client";
 
 async function getEmails(req, res) {
-	const emails = await prisma.email.findMany();
+	const emails = prisma.findMany({ emails: { orderBy: { sentAt: "desc" } } });
 	res.send(emails);
 }
 
