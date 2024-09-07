@@ -1,7 +1,7 @@
-import { prisma } from "../database/prisma-client";
+import { prisma } from "../lib/prisma-client";
 
 async function getEmails(req, res) {
-	const emails = prisma.findMany({ emails: { orderBy: { sentAt: "desc" } } });
+	const emails = prisma.email.findMany();
 	res.send(emails);
 }
 
@@ -20,4 +20,32 @@ async function createEmail(req, res) {
 	res.send(newEmail);
 }
 
-export { getEmails, createEmail };
+async function updateEmail(req, res) {
+	const { id } = req.params;
+	const { subject, body, sentTo, sentFrom, sentReply } = req.body;
+	const email = await prisma.email.update({
+		where: {
+			id: parseInt(id),
+		},
+		data: {
+			subject,
+			body,
+			sentTo,
+			sentFrom,
+			sentReply,
+		},
+	});
+	res.send(email);
+}
+
+async function deleteEmail(req, res) {
+	const { id } = req.params;
+	const email = await prisma.email.delete({
+		where: {
+			id: parseInt(id),
+		},
+	});
+	res.send(email);
+}
+
+export { getEmails, createEmail, deleteEmail, updateEmail };

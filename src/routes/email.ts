@@ -1,5 +1,12 @@
 import { getEmails, createEmail } from "../controllers/email";
 
-export default async function (app, opts) {
-	app.get("/email", getEmails, createEmail);
+import { FastifyInstance } from "fastify";
+
+export default async function emailRoutes(fastify: FastifyInstance) {
+	fastify.get("/email", async (request, reply) => {
+		return getEmails(request, reply);
+	});
+	fastify.post("/email", async (request, reply) => {
+		return createEmail(request, reply);
+	});
 }
