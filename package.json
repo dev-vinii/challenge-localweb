@@ -6,7 +6,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "tsx watch --env-file .env src/server.ts",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "eslint ."
 	},
 	"keywords": [],
 	"author": "",
@@ -18,10 +19,17 @@
 		"fastify": "^4.28.1",
 		"fastify-plugin": "^4.5.1",
 		"install": "^0.13.0",
+		"prettier": "^3.3.3",
 		"typescript": "^5.5.4"
 	},
 	"devDependencies": {
+		"@eslint/js": "^9.10.0",
+		"eslint": "^9.10.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-prettier": "^5.2.1",
+		"globals": "^15.9.0",
 		"prisma": "^5.19.1",
-		"tsx": "^4.19.0"
+		"tsx": "^4.19.0",
+		"typescript-eslint": "^8.4.0"
 	}
 }
