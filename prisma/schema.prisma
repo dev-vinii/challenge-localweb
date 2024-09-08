@@ -15,6 +15,22 @@ model Email {
   sentTo    String
   sentFrom  String
   sentReply String?
+  deletedAt DateTime?
   
   @@map("emails")
+}
+
+model Event {
+  id        Int      @id @default(autoincrement())
+  title     String
+  description String
+  date      DateTime
+  startTime String
+  endTime   String
+  location  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  
+  @@map("events")
 }

@@ -1,29 +1,31 @@
+import { Prisma } from "@prisma/client";
 import { prisma } from "../lib/prisma-client";
 
 async function getAllEmails() {
-	return prisma.email.findMany();
+  return prisma.email.findMany();
 }
 
-async function createNewEmail(data) {
-	return prisma.email.create({
-		data: {
-			...data,
-			sentAt: new Date(),
-		},
-	});
+async function createNewEmail(data: Prisma.EmailCreateInput) {
+  return prisma.email.create({
+    data: {
+      ...data,
+      sentAt: new Date(),
+    },
+  });
 }
 
-async function updateEmailById(id, data) {
-	return prisma.email.update({
-		where: { id: parseInt(id) },
-		data,
-	});
+async function updateEmailById(id: string, data: Prisma.EmailUpdateInput) {
+  return prisma.email.update({
+    where: { id: parseInt(id) },
+    data,
+  });
 }
 
-async function deleteEmailById(id) {
-	return prisma.email.delete({
-		where: { id: parseInt(id) },
-	});
+async function deleteEmailById(id: string) {
+  return prisma.email.update({
+    where: { id: parseInt(id) },
+    data: { deletedAt: new Date() },
+  });
 }
 
 export { getAllEmails, createNewEmail, updateEmailById, deleteEmailById };
