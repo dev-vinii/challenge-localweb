@@ -16,6 +16,7 @@ model Email {
   sentFrom  String
   sentReply String?
   deletedAt DateTime?
+  isSpam    Boolean  @default(false)
   
   @@map("emails")
 }

@@ -3,11 +3,17 @@ import {
   createNewEmail,
   updateEmailById,
   deleteEmailById,
+  getSpamEmails,
 } from "../services/email";
 
 async function getEmails(req, res) {
   const emails = await getAllEmails();
   res.send(emails);
+}
+
+async function getSpam(req, res) {
+  const spamEmails = await getSpamEmails();
+  res.send(spamEmails);
 }
 
 async function createEmail(req, res) {
@@ -41,4 +47,4 @@ async function deleteEmail(req, res) {
   res.send(email);
 }
 
-export { getEmails, createEmail, updateEmail, deleteEmail };
+export { getEmails, createEmail, updateEmail, deleteEmail, getSpam };
