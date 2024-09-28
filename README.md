@@ -14,6 +14,7 @@
 ### Rode o banco
 
 ```sh
+  Atenção no .env.example, crie seu .env antes de subir o banco
   docker compose up
 ```
 
