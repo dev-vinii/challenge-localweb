@@ -1,50 +1,66 @@
-import {
-  getAllEmails,
-  createNewEmail,
-  updateEmailById,
-  deleteEmailById,
-  getSpamEmails,
-} from "../services/email";
+import EmailService from "@/services/email";
 
-async function getEmails(req, res) {
-  const emails = await getAllEmails();
-  res.send(emails);
+class EmailController {
+  static async getEmails(req, res) {
+    try {
+      const emails = await EmailService.getAllEmails();
+      res.send(emails);
+    } catch (error) {
+      res.status(500).send({ error: "Error fetching emails." });
+    }
+  }
+
+  static async getSpam(req, res) {
+    try {
+      const spamEmails = await EmailService.getSpamEmails();
+      res.send(spamEmails);
+    } catch (error) {
+      res.status(500).send({ error: "Error fetching spam emails." });
+    }
+  }
+
+  static async createEmail(req, res) {
+    try {
+      const { subject, body, sentTo, sentFrom, sentReply } = req.body;
+      const newEmail = await EmailService.createNewEmail({
+        subject,
+        body,
+        sentTo,
+        sentFrom,
+        sentReply,
+      });
+      res.send(newEmail);
+    } catch (error) {
+      res.status(500).send({ error: "Error creating email." });
+    }
+  }
+
+  static async updateEmail(req, res) {
+    try {
+      const { id } = req.params;
+      const { subject, body, sentTo, sentFrom, sentReply } = req.body;
+      const email = await EmailService.updateEmailById(id, {
+        subject,
+        body,
+        sentTo,
+        sentFrom,
+        sentReply,
+      });
+      res.send(email);
+    } catch (error) {
+      res.status(500).send({ error: "Error updating email." });
+    }
+  }
+
+  static async deleteEmail(req, res) {
+    try {
+      const { id } = req.params;
+      const email = await EmailService.deleteEmailById(id);
+      res.send(email);
+    } catch (error) {
+      res.status(500).send({ error: "Error deleting email." });
+    }
+  }
 }
 
-async function getSpam(req, res) {
-  const spamEmails = await getSpamEmails();
-  res.send(spamEmails);
-}
-
-async function createEmail(req, res) {
-  const { subject, body, sentTo, sentFrom, sentReply } = req.body;
-  const newEmail = await createNewEmail({
-    subject,
-    body,
-    sentTo,
-    sentFrom,
-    sentReply,
-  });
-  res.send(newEmail);
-}
-
-async function updateEmail(req, res) {
-  const { id } = req.params;
-  const { subject, body, sentTo, sentFrom, sentReply } = req.body;
-  const email = await updateEmailById(id, {
-    subject,
-    body,
-    sentTo,
-    sentFrom,
-    sentReply,
-  });
-  res.send(email);
-}
-
-async function deleteEmail(req, res) {
-  const { id } = req.params;
-  const email = await deleteEmailById(id);
-  res.send(email);
-}
-
-export { getEmails, createEmail, updateEmail, deleteEmail, getSpam };
+export default EmailController;

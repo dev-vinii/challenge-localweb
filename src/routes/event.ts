@@ -1,22 +1,9 @@
 import { FastifyInstance } from "fastify";
-import {
-  createEvent,
-  deleteEvent,
-  getEvents,
-  updateEvent,
-} from "../controllers/event";
+import EventController from "@/controllers/event";
 
 export default async function eventRoutes(app: FastifyInstance) {
-  app.get("/event", async (request, reply) => {
-    return getEvents(request, reply);
-  });
-  app.post("/event", async (request, reply) => {
-    return createEvent(request, reply);
-  });
-  app.put("/event/:id", async (request, reply) => {
-    return updateEvent(request, reply);
-  });
-  app.delete("/event/:id", async (request, reply) => {
-    return deleteEvent(request, reply);
-  });
+  app.get("/event", EventController.getEvents);
+  app.post("/event", EventController.createEvent);
+  app.put("/event/:id", EventController.updateEvent);
+  app.delete("/event/:id", EventController.deleteEvent);
 }

@@ -1,27 +1,10 @@
-import {
-  getEmails,
-  createEmail,
-  updateEmail,
-  deleteEmail,
-  getSpam,
-} from "../controllers/email";
-
 import { FastifyInstance } from "fastify";
+import EmailController from "@/controllers/email";
 
 export default async function emailRoutes(app: FastifyInstance) {
-  app.get("/email", async (request, reply) => {
-    return getEmails(request, reply);
-  });
-  app.get("/email/spam", async (request, reply) => {
-    return getSpam(request, reply);
-  });
-  app.post("/email", async (request, reply) => {
-    return createEmail(request, reply);
-  });
-  app.put("/email/:id", async (request, reply) => {
-    return updateEmail(request, reply);
-  });
-  app.delete("/email/:id", async (request, reply) => {
-    return deleteEmail(request, reply);
-  });
+  app.get("/email", EmailController.getEmails);
+  app.get("/email/spam", EmailController.getSpam);
+  app.post("/email", EmailController.createEmail);
+  app.put("/email/:id", EmailController.updateEmail);
+  app.delete("/email/:id", EmailController.deleteEmail);
 }
